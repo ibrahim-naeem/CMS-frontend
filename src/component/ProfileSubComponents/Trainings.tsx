@@ -25,24 +25,21 @@ const Trainings: FC<ITrainingsProps> = (props) => {
             })
             const res = await response.json();
 
-            let mapTrainingData: TrainingMapperModel = {
-                training_id: "",
-                training_name: "",
-                employees: [""]
+            // let mapTrainingData: TrainingMapperModel = {
+            //     training_id: "",
+            //     training_name: "",
+            //     employees: [""]
 
-            };
+            // };
 
             // console.log(res)
 
             let mappedTrainingDataArray: Array<TrainingMapperModel> = []
 
             // res.forEach((trainingRow: TrainingMapperModel, index: any) => {
-
             //     mapTrainingData.training_id = trainingRow.training_id;
             //     mapTrainingData.training_name = trainingRow.training_name;
             //     mapTrainingData.employees = trainingRow.employees;
-
-            //     // console.log("Map training Data => ", mapTrainingData.training_id, mapTrainingData.training_name, mapTrainingData.employees)
             //     mappedTrainingDataArray[index] = mapTrainingData;
             // })
 

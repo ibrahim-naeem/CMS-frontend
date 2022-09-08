@@ -104,7 +104,7 @@ const Projects: FC<IProjectsProps> = (props) => {
                         <tbody>
                             {project.map((row) => {
                                 return (
-                                    <tr key={Math.random()}>
+                                    <tr key={row?.project_id}>
                                         <th className="border-t-0 px-3 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
                                             {row?.project_id ? row?.project_id : '...'}
                                         </th>
@@ -117,20 +117,13 @@ const Projects: FC<IProjectsProps> = (props) => {
                                         <td className="border-t-0 px-3 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4  text-emerald-500 ">
                                             {row?.manager_id ? row?.manager_id : '...'}
                                         </td>
-                                        {/* <td className="border-t-0 px-3 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                                            {row?.employees_id ? row?.employees_id.map((employee) => {
-                                                return (
-                                                    <i key={Math.random()} className=" block  text-emerald-500 mr-4 w-1/3">{employee ? employee : '...'}</i>
-                                                )
-                                            }) : '...'}
 
-                                        </td> */}
                                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 flex items-center">
                                             <div>
                                                 {row?.employees_id ? row.employees_id.map(employees => {
                                                     return (
                                                         <>
-                                                            <i key={Math.random()} className="fas fa-arrow-up text-emerald-500 block">{employees ? employees : '...'}</i>
+                                                            <i key={row?.project_id} className="fas fa-arrow-up text-emerald-500 block">{employees ? employees : '...'}</i>
 
                                                         </>
 

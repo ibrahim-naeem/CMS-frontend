@@ -123,8 +123,8 @@ const Leaves: FC<ILeavesProps> = (props) => {
                                                     return (
                                                         <>
                                                             <i key={Math.random()} className=" block fas fa-arrow-up text-emerald-500 ">
-                                                                <span className=' mr-1 block'>{employees_id[0]}</span>
-                                                                <span className=' font-semibold text-normal block'>{employees_id[1].toUpperCase()}</span>
+                                                                <span key={Math.random()} className=' mr-1 block'>{employees_id[0]}</span>
+                                                                <span key={Math.random()} className=' font-semibold text-normal block'>{employees_id[1].toUpperCase()}</span>
                                                             </i>
 
                                                         </>
