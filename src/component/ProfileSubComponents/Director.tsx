@@ -26,7 +26,7 @@ const Director: FC<IDirectorProps> = (props) => {
                 headers: { token }
             })
             const res = await response.json();
-            console.log(res)
+            // console.log(res)
 
             let mapDirectorData: DirectorMapperModel = {
                 director_id: '',
@@ -54,7 +54,7 @@ const Director: FC<IDirectorProps> = (props) => {
             })
             setDirector(mapDirectorDataArray)
 
-            console.log(res)
+            // console.log(res)
         } catch (error) {
             console.error(error)
         }
