@@ -78,7 +78,7 @@ const ProfileMain: FC<IProfileMainProps> = (): JSX.Element => {
   }, []);
 
   return (
-    <div className={` container mr-8 bg-slate-50 p-4`}>
+    <div className={` bg-slate-50  `}>
       {display && (
         <ProfileModal
           display={display}
@@ -86,7 +86,7 @@ const ProfileMain: FC<IProfileMainProps> = (): JSX.Element => {
           details={details}
         />
       )}
-      <div className="flex justify-between items-center px-4 pb-4 ">
+      <div className="flex justify-between items-center px-16 pb-4  ">
         <h1 className="text-2xl font-semibold text-[#51535D] ">Profile</h1>
         <button
           onClick={() => setDisplay(true)}
@@ -96,7 +96,7 @@ const ProfileMain: FC<IProfileMainProps> = (): JSX.Element => {
           {details.userName ? "Update Details" : "Add Details"}
         </button>
       </div>
-      <div className="flex max-w-5xl justify-around  mx-auto p-4 bg-slate-200 text-[#51535D]">
+      <div className="flex max-w-5xl justify-around  mx-auto p-4 bg-slate-200 text-[#51535D] ">
         <ul className="">
           <li className="font-semibold">
             Username :{" "}

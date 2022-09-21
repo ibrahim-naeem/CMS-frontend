@@ -1,5 +1,5 @@
 export const verifyExpiredToken = (res) => {
-    console.log("Token Details", res)
+    // console.log("Token Details", res)
     if (res?.err?.name === "TokenExpiredError") {
         console.log("TOKEN REMOVED from local storage")
         localStorage.removeItem('Token')

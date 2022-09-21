@@ -1,15 +1,16 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState } from "react";
 
 // Material UI imports
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
-import Director from './Director';
-import Managers from './Managers';
-import Projects from './Projects';
-import SkillSets from './SkillSets';
-import Leaves from './Leaves';
-import Trainings from './Trainings';
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+import Director from "./Director";
+import Managers from "./Managers";
+import Projects from "./Projects";
+import SkillSets from "./SkillSets";
+import Leaves from "./Leaves";
+import Trainings from "./Trainings";
+import Files from "./Files";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -29,7 +30,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 2, }}>
+        <Box sx={{ p: 2 }}>
           <div>{children}</div>
         </Box>
       )}
@@ -37,16 +38,14 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 
-interface IProfileTabsProps {
-}
+interface IProfileTabsProps {}
 
 const ProfileTabs: FC<IProfileTabsProps> = (props) => {
   const [value, setValue] = useState(0);
@@ -57,20 +56,20 @@ const ProfileTabs: FC<IProfileTabsProps> = (props) => {
 
   return (
     <div className="rounded max-w-5xl mx-auto mt-4  bg-slate-200 text-[#51535D] ">
-
-      <Box sx={{ width: '100%' }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs sx={{ width: '100%' }} value={value} onChange={handleChange} >
+      <Box sx={{ width: "100%" }}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs sx={{ width: "100%" }} value={value} onChange={handleChange}>
             <Tab label="Director" {...a11yProps(0)} />
             <Tab label="Manager" {...a11yProps(1)} />
             <Tab label="Projects" {...a11yProps(2)} />
             <Tab label="Skill Sets" {...a11yProps(3)} />
             <Tab label="Leaves" {...a11yProps(4)} />
             <Tab label="Trainings" {...a11yProps(5)} />
+            <Tab label="Files" {...a11yProps(6)} />
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <Director />
+          {/* <Director /> */}
         </TabPanel>
         <TabPanel value={value} index={1}>
           <Managers />
@@ -87,10 +86,12 @@ const ProfileTabs: FC<IProfileTabsProps> = (props) => {
         <TabPanel value={value} index={5}>
           <Trainings />
         </TabPanel>
+        <TabPanel value={value} index={6}>
+          <Files />
+        </TabPanel>
       </Box>
     </div>
-  )
+  );
 };
 
 export default ProfileTabs;
-

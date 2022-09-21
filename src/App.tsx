@@ -1,21 +1,13 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect } from "react";
 
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-} from "react-router-dom";
-
-import Dashboard from './Pages/Dashboard';
-import Login from './Pages/Login';
-import Register from './Pages/Register';
-import Profile from './Pages/Profile';
-import Home from './Pages/Home';
-import { isTokenPresent } from './utils/utitlityMethods/utilityMethods';
-
-
+import Dashboard from "./Pages/Dashboard";
+import Login from "./Pages/Login";
+import Register from "./Pages/Register";
+import Profile from "./Pages/Profile";
+import Home from "./Pages/Home";
+import { isTokenPresent } from "./utils/utitlityMethods/utilityMethods";
 
 const App: FC = (): JSX.Element => {
   return (
@@ -35,4 +27,3 @@ const App: FC = (): JSX.Element => {
 };
 
 export default App;
-
