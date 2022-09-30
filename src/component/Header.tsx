@@ -16,6 +16,7 @@ const Header: FC<IHeaderProps> = ({}): JSX.Element => {
   const [image, setImage] = useState<any>();
   const [name, setName] = useState<string>("");
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
+
   const token: any = localStorage.getItem("Token");
 
   const getProfile = async () => {
@@ -26,14 +27,13 @@ const Header: FC<IHeaderProps> = ({}): JSX.Element => {
       });
 
       const res = await response.json();
-      console.log(res);
 
-      isTokenPresent("Token");
-      let tokenExpired = verifyExpiredToken(res);
+      // isTokenPresent("Token");
+      // let tokenExpired = verifyExpiredToken(res);
 
-      if (tokenExpired) {
-        navigate("/login");
-      }
+      // if (tokenExpired) {
+      //   navigate("/login");
+      // }
 
       setName(res.user_name);
     } catch (error) {
@@ -43,7 +43,6 @@ const Header: FC<IHeaderProps> = ({}): JSX.Element => {
 
   const handleClick = () => {
     localStorage.removeItem("Token");
-
     navigate("/login");
   };
 
@@ -60,13 +59,14 @@ const Header: FC<IHeaderProps> = ({}): JSX.Element => {
       });
 
       const res = await response.json();
+
       setImagePath(res.image_path);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const getS3File = async () => {
+  const getS3Image = async () => {
     try {
       if (imagePath) {
         const response = await fetch(`http://localhost:5000/user${imagePath}`, {
@@ -89,7 +89,7 @@ const Header: FC<IHeaderProps> = ({}): JSX.Element => {
   useEffect(() => {
     getProfile();
     getImagePath();
-    getS3File();
+    getS3Image();
   }, [imagePath]);
   return (
     <div className=" py-6 flex items-center px-9  ">

@@ -13,20 +13,39 @@ const Login: FC<ILoginProps> = ({}) => {
     e.preventDefault();
     try {
       const body = { email, password };
-      const response = await fetch("http://localhost:5000/auth/login", {
+      const response = await fetch("http://localhost:5000/cognito/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
 
       const res = await response.json();
-      localStorage.setItem("Token", res);
+      localStorage.setItem("Token", res.token);
       navigate("/");
       console.log(res);
     } catch (error) {
       console.error(error);
     }
   };
+
+  // const handleSubmit = async (e: any) => {
+  //   e.preventDefault();
+  //   try {
+  //     const body = { email, password };
+  //     const response = await fetch("http://localhost:5000/auth/login", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(body),
+  //     });
+
+  //     const res = await response.json();
+  //     localStorage.setItem("Token", res);
+  //     navigate("/");
+  //     console.log(res);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   return (
     <div className="container mx-auto flex justify-center items-center h-[100vh]">
