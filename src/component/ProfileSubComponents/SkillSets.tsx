@@ -51,7 +51,7 @@ const SkillSets: FC<ISkillSetsProps> = (props) => {
       const res = await response.json();
       console.log(res);
       alert(res.message);
-      window.location.reload();
+      // window.location.reload();
     } catch (error) {
       console.error(error);
     }

@@ -7,12 +7,6 @@ import { isTokenPresent } from "../utils/utitlityMethods/utilityMethods";
 interface IdashboardProps {}
 
 const dashboard: FC<IdashboardProps> = ({}) => {
-  // useEffect(() => {
-  //   let istokenAvailble = isTokenPresent("Token");
-  //   console.log("istoken availble ", istokenAvailble)
-  //   // setIsAuthenticated(istokenAvailble);
-  // }, [])
-
   return (
     <div className="flex">
       <div className="w-[18vw] ">

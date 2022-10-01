@@ -16,16 +16,12 @@ const LeaveModal: FC<ILeaveModalProps> = ({
   let token: any = localStorage.getItem("Token");
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let selectValue = e.target.Leaves.value;
-    let inputValue = e.target.LeaveDate.value;
+    // let selectValue = e.target.Leaves.value;
+    let date = e.target.LeaveDate.value;
     let leaveStatus = e.target.Status.value;
-    if (selectValue || inputValue) {
-      if (inputValue) {
-        selectValue = "";
-      }
-      let LeaveDate = selectValue || inputValue;
-
-      console.log(LeaveDate, leaveStatus);
+    // if (selectValue || date) {
+    if (date) {
+      console.log(date, leaveStatus);
       try {
         const response = await fetch("http://localhost:5000/user/leave", {
           method: "POST",
@@ -33,11 +29,10 @@ const LeaveModal: FC<ILeaveModalProps> = ({
             "Content-Type": "application/json",
             token,
           },
-          body: JSON.stringify({ LeaveDate, leaveStatus }),
+          body: JSON.stringify({ date, leaveStatus }),
         });
         const res = await response.json();
-
-        window.location.reload();
+        // window.location.reload();
       } catch (error) {
         console.error(error);
       }
@@ -67,7 +62,7 @@ const LeaveModal: FC<ILeaveModalProps> = ({
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="flex justify-around ">
                 <div className="w-2/3">
-                  <label htmlFor="cars">Choose a Leave:</label>
+                  {/* <label htmlFor="cars">Choose a Leave:</label>
                   <select name="Leaves" id="Leaves">
                     <option value="">Leaves</option>
                     {allLeave.map((Leave) => {
@@ -77,7 +72,7 @@ const LeaveModal: FC<ILeaveModalProps> = ({
                         </option>
                       );
                     })}
-                  </select>
+                  </select> */}
                   <h1 className="my-4">Add new Leave below :</h1>
 
                   <input

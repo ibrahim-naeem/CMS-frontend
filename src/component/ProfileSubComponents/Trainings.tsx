@@ -39,7 +39,7 @@ const Trainings: FC<ITrainingsProps> = (props) => {
         headers: { token },
       });
       const res = await response.json();
-      console.log("getTrainings=>", res);
+
       let mappedTrainingDataArray: Array<TrainingMapperModel> = [];
       if (res) {
         res.map((trainingRow: TrainingMapperModel) => {

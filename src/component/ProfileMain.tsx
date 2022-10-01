@@ -145,19 +145,25 @@ const ProfileMain: FC<IProfileMainProps> = (): JSX.Element => {
           <li className="font-semibold">
             Date of Birth :{" "}
             <span className="font-normal">
-              {details.dateOfBirth ? details.dateOfBirth : "N/A"}
+              {details.dateOfBirth
+                ? `${new Date(details.dateOfBirth).toDateString()}`
+                : "N/A"}
             </span>
           </li>
           <li className="font-semibold">
             Joining Date :{" "}
             <span className="font-normal">
-              {details.joiningDate ? details.joiningDate : "N/A"}
+              {details.joiningDate
+                ? `${new Date(details.joiningDate).toDateString()}`
+                : "N/A"}
             </span>
           </li>
           <li className="font-semibold">
             ConfirmationDate :{" "}
             <span className="font-normal">
-              {details.confirmationDate ? details.confirmationDate : "N/A"}
+              {details.confirmationDate
+                ? `${new Date(details.confirmationDate).toDateString()}`
+                : "N/A"}
             </span>
           </li>
           <li className="font-semibold">

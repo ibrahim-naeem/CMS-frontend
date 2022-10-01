@@ -1,4 +1,5 @@
-import React, { FC, useState } from "react";
+import { CircularProgress } from "@mui/material";
+import { FC, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 
@@ -8,19 +9,22 @@ const Login: FC<ILoginProps> = ({}) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       const body = { email, password };
-      const response = await fetch("http://localhost:5000/auth/login", {
+      const response = await fetch("http://localhost:5000/cognito/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
 
       const res = await response.json();
-      localStorage.setItem("Token", res);
+      setIsLoading(false);
+      localStorage.setItem("Token", res.token);
       navigate("/");
       console.log(res);
     } catch (error) {
@@ -35,8 +39,8 @@ const Login: FC<ILoginProps> = ({}) => {
         <div className="flex flex-col items-center">
           <img className="w-16" src={logo} alt="" />
 
-          <h1 className="text-lg pt-2 pb-6 text-[#CBCCD4]">Dashboard Kit</h1>
-          <h1 className="text-xl font-bold">Login to Dashboad Kit</h1>
+          <h1 className="text-lg pt-2 pb-6 text-[#CBCCD4]">CMS Dashboard </h1>
+          <h1 className="text-xl font-bold">Login to CMS Dashboad </h1>
           <p className="text-sm py-2 text-[#CBCCD4]">
             Enter your Email and Password below
           </p>
@@ -79,7 +83,11 @@ const Login: FC<ILoginProps> = ({}) => {
             </div>
             {/* BUTTON */}
             <button className="w-full bg-[#3751FF] text-white font-semibold py-2 mt-2 mb-5 rounded">
-              Login
+              {!isLoading ? (
+                "Login"
+              ) : (
+                <CircularProgress color="inherit" size={20} />
+              )}
             </button>
             <p>
               Don't have an account?{" "}

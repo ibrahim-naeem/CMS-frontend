@@ -1,6 +1,7 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
+import { CircularProgress } from "@mui/material";
 
 interface IRegisterProps {}
 
@@ -9,37 +10,59 @@ const Register: FC<IRegisterProps> = ({}) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
+  const [userRole, setUserRole] = useState([]);
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const getUserRoles = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/cognito/roles", {
+        method: "GET",
+      });
+
+      const res = await response.json();
+      setUserRole(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       const body = { username, email, role, password };
-      const response = await fetch("http://localhost:5000/auth/register", {
+      const response = await fetch("http://localhost:5000/cognito/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
       const res = await response.json();
-      console.log(res);
-      localStorage.setItem("Token", res.token);
-      if (res.token) {
-        navigate("/");
+      setIsLoading(false);
+      if (res.message) {
+        localStorage.setItem("email", res.username);
+
+        navigate("/verify");
       }
-      // console.log(username, email, role, password);
+
+      console.log(res);
     } catch (error) {
       console.error(error);
     }
   };
 
+  useEffect(() => {
+    getUserRoles();
+  }, []);
+
   return (
-    <div className="container mx-auto flex justify-center items-center h-[100vh]">
+    <div className="container mx-auto flex flex-col justify-center items-center h-[100vh]">
       {/* BOX START */}
       <div className="w-1/2 border bg-white rounded py-6">
         <div className="flex flex-col items-center">
           <img className="w-16" src={logo} alt="" />
-          <h1 className="text-lg pt-2 pb-6 text-[#CBCCD4]"> Dashboard Kit</h1>
-          <h1 className="text-xl font-bold">Register to Dashboad Kit</h1>
+          <h1 className="text-lg pt-2 pb-6 text-[#CBCCD4]"> CMS Dashboard </h1>
+          <h1 className="text-xl font-bold">Register to CMS Dashboad </h1>
           <p className="text-sm py-2 text-[#CBCCD4]">
             Enter your details below
           </p>
@@ -95,12 +118,22 @@ const Register: FC<IRegisterProps> = ({}) => {
                 id="role"
                 placeholder="Email address"
               >
-                <option value="">--Please choose an option--</option>
-                <option value="director">Director</option>
-                <option value="manager">Manager</option>
-                <option value="employee">Employee</option>
+                <option key="empty" value="">
+                  --Please choose an option--
+                </option>
+
+                {userRole.map((role: any) => {
+                  return (
+                    <>
+                      <option key={role.role_id} value={role.role}>
+                        {role.role}
+                      </option>
+                    </>
+                  );
+                })}
               </select>
             </div>
+
             {/* Password  */}
             <div className="w-full my-2">
               <label
@@ -119,7 +152,11 @@ const Register: FC<IRegisterProps> = ({}) => {
             </div>
             {/* BUTTON */}
             <button className="w-full bg-[#3751FF] text-white font-semibold py-2 mt-2 mb-5 rounded">
-              Register
+              {!isLoading ? (
+                "Register"
+              ) : (
+                <CircularProgress color="inherit" size={20} />
+              )}
             </button>
             <p>
               Already have an Account?{" "}
@@ -132,7 +169,7 @@ const Register: FC<IRegisterProps> = ({}) => {
         </form>
         {/* FORM  END*/}
       </div>
-      {/* BOX START */}
+      {/* BOX END */}
     </div>
   );
 };

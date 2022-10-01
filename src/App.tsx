@@ -8,6 +8,7 @@ import Register from "./Pages/Register";
 import Profile from "./Pages/Profile";
 import Home from "./Pages/Home";
 import { isTokenPresent } from "./utils/utitlityMethods/utilityMethods";
+import Verification from "./Pages/Verification";
 
 const App: FC = (): JSX.Element => {
   return (
@@ -17,6 +18,7 @@ const App: FC = (): JSX.Element => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/verify" element={<Verification />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="*" element={<p>404 - Page Not Found!</p>} />

@@ -23,11 +23,11 @@ const Managers: FC<IManagersProps> = (props) => {
 
   const getManager = async () => {
     try {
-      const response = await fetch("http://localhost:5000/user/manager", {
-        method: "GET",
-        headers: { token },
-      });
-      const res = await response.json();
+      // const response = await fetch("http://localhost:5000/user/manager", {
+      //   method: "GET",
+      //   headers: { token },
+      // });
+      // const res = await response.json();
 
       let mapManagerData: ManagerMapperModel = {
         manager_id: "",
@@ -39,9 +39,9 @@ const Managers: FC<IManagersProps> = (props) => {
 
       let mapManagerDataArray: Array<ManagerMapperModel> = [];
 
-      res.map((managerRow: ManagerMapperModel) => {
-        mapManagerDataArray.push(managerRow);
-      });
+      // res.map((managerRow: ManagerMapperModel) => {
+      //   mapManagerDataArray.push(managerRow);
+      // });
 
       setManager(mapManagerDataArray);
     } catch (error) {
@@ -51,34 +51,32 @@ const Managers: FC<IManagersProps> = (props) => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/user/manager/${id}`, {
-        method: "DELETE",
-        headers: { token },
-      });
-      const res = await response.json();
-      console.log(res);
-      alert(res.message);
-      window.location.reload();
+      // const response = await fetch(`http://localhost:5000/user/manager/${id}`, {
+      //   method: "DELETE",
+      //   headers: { token },
+      // });
+      // const res = await response.json();
+      // console.log(res);
+      // alert(res.message);
+      // window.location.reload();
     } catch (error) {
       console.error(error);
     }
   };
 
   const getAllManagers = async () => {
-    setShowManagerModal(true);
-    const response = await fetch("http://localhost:5000/user/getAllManagers", {
-      headers: { token },
-    });
-
-    const res = await response.json();
-
-    res.map((manager) => {
-      setAllManagers((prevState) => [...prevState, manager]);
-    });
+    // setShowManagerModal(true);
+    // const response = await fetch("http://localhost:5000/user/getAllManagers", {
+    //   headers: { token },
+    // });
+    // const res = await response.json();
+    // res.map((manager) => {
+    //   setAllManagers((prevState) => [...prevState, manager]);
+    // });
   };
 
   useEffect(() => {
-    getManager();
+    // getManager();
   }, []);
 
   return (
