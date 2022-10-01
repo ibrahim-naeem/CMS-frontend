@@ -74,7 +74,7 @@ const Projects: FC<IProjectsProps> = (props) => {
   };
 
   useEffect(() => {
-    getProjects();
+    // getProjects();
   }, []);
   return (
     <div className="w-full  px-4 mx-auto ">

@@ -45,7 +45,7 @@ const Leaves: FC<ILeavesProps> = (props) => {
       const res = await response.json();
       console.log(res);
       alert(res.message);
-      window.location.reload();
+      // window.location.reload();
     } catch (error) {
       console.error(error);
     }
@@ -97,10 +97,16 @@ const Leaves: FC<ILeavesProps> = (props) => {
                   Leave ID
                 </th>
                 <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                  Date
+                  User ID
                 </th>
                 <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                  Employees ID & Status
+                  Status
+                </th>
+                <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                  Created At
+                </th>
+                <th className="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                  Delete
                 </th>
               </tr>
             </thead>
@@ -110,33 +116,21 @@ const Leaves: FC<ILeavesProps> = (props) => {
                   return (
                     <tr key={Math.random()}>
                       <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
-                        {row?.leave_id ? row?.leave_id : "..."}_
+                        {row?.leave_id ? row?.leave_id : "..."}
                       </th>
-                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
-                        {row?.date ? row?.date : "..."}
+                      <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                        {row?.user_id ? row?.user_id : "..."}
+                      </th>
+                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap text-emerald-500 bold  p-4 ">
+                        {row?.status ? row?.status : "..."}
+                      </td>
+                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap bold  p-4 ">
+                        {row?.created_at
+                          ? `${new Date(row?.created_at).toDateString()}`
+                          : "..."}
                       </td>
 
-                      <td
-                        key={Math.random()}
-                        className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 flex items-center"
-                      >
-                        <div key={Math.random()}>
-                          {row?.employees_id_status
-                            ? row.employees_id_status.map((employees_id) => {
-                                return (
-                                  <>
-                                    <i
-                                      key={Math.random()}
-                                      className=" block fas fa-arrow-up text-emerald-500 mr-4"
-                                    >
-                                      {employees_id}
-                                    </i>
-                                  </>
-                                );
-                              })
-                            : "..."}
-                        </div>
-
+                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap bold  p-4 ">
                         {row?.leave_id && (
                           <button
                             onClick={(e) => handleDelete(row?.leave_id)}

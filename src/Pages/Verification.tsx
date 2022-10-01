@@ -1,15 +1,17 @@
 import { FC, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
-
+import { CircularProgress } from "@mui/material";
 interface IVerificationProps {}
 
 const Verification: FC<IVerificationProps> = (props) => {
   const navigate = useNavigate();
   const [verifiactionCode, setVerifiactionCode] = useState("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setIsLoading(true);
     const email = localStorage.getItem("email");
     const body = {
       email,
@@ -23,7 +25,7 @@ const Verification: FC<IVerificationProps> = (props) => {
         body: JSON.stringify(body),
       });
       const res = await response.json();
-
+      setIsLoading(false);
       if (res.message) {
         navigate("/login");
       }
@@ -69,7 +71,11 @@ const Verification: FC<IVerificationProps> = (props) => {
 
             {/* BUTTON */}
             <button className="w-full bg-[#3751FF] text-white font-semibold py-2 mt-2 mb-5 rounded">
-              Verify Email
+              {!isLoading ? (
+                "Verify Email"
+              ) : (
+                <CircularProgress color="inherit" size={20} />
+              )}
             </button>
           </div>
           {/* Form Container End  */}

@@ -5,7 +5,7 @@ import {
   isTokenPresent,
   verifyExpiredToken,
 } from "../utils/utitlityMethods/utilityMethods";
-import { Avatar } from "@mui/material";
+import { Avatar, CircularProgress } from "@mui/material";
 import HeaderImageModal from "./ProfileSubComponents/Modals/HeaderImageModal";
 import { BsClipboardPlus } from "react-icons/bs";
 
@@ -16,6 +16,7 @@ const Header: FC<IHeaderProps> = ({}): JSX.Element => {
   const [image, setImage] = useState<any>();
   const [name, setName] = useState<string>("");
   const [showImageModal, setShowImageModal] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const token: any = localStorage.getItem("Token");
 
@@ -41,8 +42,10 @@ const Header: FC<IHeaderProps> = ({}): JSX.Element => {
     }
   };
 
-  const handleClick = () => {
+  const signOut = () => {
+    setIsLoading(true);
     localStorage.removeItem("Token");
+    setIsLoading(false);
     navigate("/login");
   };
 
@@ -121,10 +124,11 @@ const Header: FC<IHeaderProps> = ({}): JSX.Element => {
         {name && name.toUpperCase()}
       </p>
       <button
-        onClick={handleClick}
+        onClick={signOut}
         className="flex items-center border-2 rounded-full px-4 py-2 my-4 mr-8 text-[#51535D] hover:text-white hover:border-white hover:bg-[#51535D]"
       >
-        <BiLogOutCircle className="mr-2 mt-1" /> Logut
+        <BiLogOutCircle className="mr-2 mt-1" />
+        {!isLoading ? "Logout" : <CircularProgress color="inherit" size={20} />}
       </button>
     </div>
   );

@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
+import { CircularProgress } from "@mui/material";
 
 interface IRegisterProps {}
 
@@ -11,16 +12,16 @@ const Register: FC<IRegisterProps> = ({}) => {
   const [role, setRole] = useState("");
   const [userRole, setUserRole] = useState([]);
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const getUserRoles = async () => {
     try {
-      const response = await fetch("http://localhost:5000/auth/roles", {
+      const response = await fetch("http://localhost:5000/cognito/roles", {
         method: "GET",
       });
 
       const res = await response.json();
       setUserRole(res);
-      console.log(res);
     } catch (error) {
       console.log(error);
     }
@@ -29,6 +30,7 @@ const Register: FC<IRegisterProps> = ({}) => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       const body = { username, email, role, password };
       const response = await fetch("http://localhost:5000/cognito/signup", {
         method: "POST",
@@ -36,7 +38,7 @@ const Register: FC<IRegisterProps> = ({}) => {
         body: JSON.stringify(body),
       });
       const res = await response.json();
-
+      setIsLoading(false);
       if (res.message) {
         localStorage.setItem("email", res.username);
 
@@ -116,7 +118,7 @@ const Register: FC<IRegisterProps> = ({}) => {
                 id="role"
                 placeholder="Email address"
               >
-                <option key="0" value="">
+                <option key="empty" value="">
                   --Please choose an option--
                 </option>
 
@@ -150,7 +152,11 @@ const Register: FC<IRegisterProps> = ({}) => {
             </div>
             {/* BUTTON */}
             <button className="w-full bg-[#3751FF] text-white font-semibold py-2 mt-2 mb-5 rounded">
-              Register
+              {!isLoading ? (
+                "Register"
+              ) : (
+                <CircularProgress color="inherit" size={20} />
+              )}
             </button>
             <p>
               Already have an Account?{" "}
