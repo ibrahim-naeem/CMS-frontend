@@ -5,6 +5,13 @@ import { MdOutlineDeleteSweep } from "react-icons/md";
 import TrainingModal from "./Modals/TrainingModal";
 
 interface ITrainingsProps {}
+declare let process: {
+  env: {
+    REACT_APP_TRAINING_GET_TRAINING_URL: string;
+    REACT_APP_TRAINING_DELETE_TRAINING_URL: string;
+    REACT_APP_TRAINING_GET_ALL_TRAININGS_URL: string;
+  };
+};
 
 const Trainings: FC<ITrainingsProps> = (props) => {
   const [showTrainingModal, setShowTrainingModal] = useState(false);
@@ -19,10 +26,14 @@ const Trainings: FC<ITrainingsProps> = (props) => {
   const token: any = localStorage.getItem("Token");
 
   const getAllTraining = async () => {
+    // "http://localhost:5000/user/getAllTrainings"
     setShowTrainingModal(!showTrainingModal);
-    const response = await fetch("http://localhost:5000/user/getAllTrainings", {
-      headers: { token },
-    });
+    const response = await fetch(
+      process.env.REACT_APP_TRAINING_GET_ALL_TRAININGS_URL,
+      {
+        headers: { token },
+      }
+    );
 
     const res = await response.json();
     console.log("getAllTraining=>", res, res.status);
@@ -33,11 +44,15 @@ const Trainings: FC<ITrainingsProps> = (props) => {
   };
 
   const getTrainings = async () => {
+    // "http://localhost:5000/user/trainings"
     try {
-      const response = await fetch("http://localhost:5000/user/trainings", {
-        method: "GET",
-        headers: { token },
-      });
+      const response = await fetch(
+        process.env.REACT_APP_TRAINING_GET_TRAINING_URL,
+        {
+          method: "GET",
+          headers: { token },
+        }
+      );
       const res = await response.json();
 
       let mappedTrainingDataArray: Array<TrainingMapperModel> = [];
@@ -56,9 +71,10 @@ const Trainings: FC<ITrainingsProps> = (props) => {
   };
 
   const handleDelete = async (id) => {
+    // `http://localhost:5000/user/trainings/${id}`
     try {
       const response = await fetch(
-        `http://localhost:5000/user/trainings/${id}`,
+        `${process.env.REACT_APP_TRAINING_DELETE_TRAINING_URL}/${id}`,
         {
           method: "DELETE",
           headers: { token },

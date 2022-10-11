@@ -6,6 +6,13 @@ import ProjectMapperModel from "../../models/project-model";
 import ProjectModal from "./Modals/ProjectModal";
 
 interface IProjectsProps {}
+declare let process: {
+  env: {
+    REACT_APP_PROJECTS_GET_PROJECT_URL: string;
+    REACT_APP_PROJECTS_DELETE_PROJECT_URL: string;
+    REACT_APP_PROJECTS_GET_ALL_PROJECTS_URL: string;
+  };
+};
 
 const Projects: FC<IProjectsProps> = (props) => {
   const [showProjectModal, setShowProjectModal] = useState(false);
@@ -21,11 +28,15 @@ const Projects: FC<IProjectsProps> = (props) => {
   ]);
   const token: any = localStorage.getItem("Token");
   const getProjects = async () => {
+    // "http://localhost:5000/user/projects"
     try {
-      const response = await fetch("http://localhost:5000/user/projects", {
-        method: "GET",
-        headers: { token },
-      });
+      const response = await fetch(
+        process.env.REACT_APP_PROJECTS_GET_PROJECT_URL,
+        {
+          method: "GET",
+          headers: { token },
+        }
+      );
       const res = await response.json();
       let mapProjectData: ProjectMapperModel = {
         project_id: "",
@@ -46,11 +57,15 @@ const Projects: FC<IProjectsProps> = (props) => {
   };
 
   const handleDelete = async (id) => {
+    // `http://localhost:5000/user/project/${id}`
     try {
-      const response = await fetch(`http://localhost:5000/user/project/${id}`, {
-        method: "DELETE",
-        headers: { token },
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_PROJECTS_DELETE_PROJECT_URL}/${id}`,
+        {
+          method: "DELETE",
+          headers: { token },
+        }
+      );
       const res = await response.json();
       console.log(res);
       alert(res.message);
@@ -60,11 +75,15 @@ const Projects: FC<IProjectsProps> = (props) => {
     }
   };
 
-  const getAllManager = async () => {
+  const getAllProjects = async () => {
+    // "http://localhost:5000/user/getAllprojects",
     setShowProjectModal(true);
-    const response = await fetch("http://localhost:5000/user/getAllprojects", {
-      headers: { token },
-    });
+    const response = await fetch(
+      process.env.REACT_APP_PROJECTS_GET_ALL_PROJECTS_URL,
+      {
+        headers: { token },
+      }
+    );
 
     const res = await response.json();
 
@@ -90,7 +109,7 @@ const Projects: FC<IProjectsProps> = (props) => {
         <div className="flex items-center justify-between px-4 ">
           <h1 className="text-xl">Project Details:</h1>
           <button
-            onClick={getAllManager}
+            onClick={getAllProjects}
             className="flex items-center border-2 rounded-full px-4 py-2 my-4 text-[#51535D] hover:text-white hover:border-white hover:bg-[#51535D]"
           >
             <BsClipboardPlus className="mr-2 -mt-1" /> Add{" "}

@@ -5,7 +5,15 @@ import FileModal from "./Modals/FilleModal";
 import download from "downloadjs";
 interface IFilesProps {}
 
-const Files: FC<IFilesProps> = (props) => {
+declare let process: {
+  env: {
+    REACT_APP_FILE_GET_FILE_URL: string;
+    REACT_APP_FILE_DOWNLOAD_FILE_URL: string;
+    REACT_APP_FILE_DELETE_FILE_URL: string;
+  };
+};
+
+const Files: FC<IFilesProps> = ({}) => {
   const [showFileModal, setShowFileModal] = useState<boolean>(false);
   const [files, setFiles] = useState<any>([]);
   const token: any = localStorage.getItem("Token");
@@ -14,7 +22,8 @@ const Files: FC<IFilesProps> = (props) => {
   };
 
   const getFiles = async () => {
-    const response = await fetch("http://localhost:5000/user/getFiles", {
+    // "http://localhost:5000/user/getFiles"
+    const response = await fetch(process.env.REACT_APP_FILE_GET_FILE_URL, {
       method: "GET",
       headers: { token: token },
     });
@@ -23,9 +32,10 @@ const Files: FC<IFilesProps> = (props) => {
     setFiles(res);
   };
   const downloadFile = async (id) => {
+    //  `http://localhost:5000/user/downloadFile/${id}
     try {
       const response = await fetch(
-        `http://localhost:5000/user/downloadFile/${id}`,
+        `${process.env.REACT_APP_FILE_DOWNLOAD_FILE_URL}/${id}`,
         {
           method: "GET",
           headers: { token },
@@ -39,9 +49,10 @@ const Files: FC<IFilesProps> = (props) => {
     }
   };
   const handleDelete = async (id) => {
+    // `http://localhost:5000/user/deleteFiles/${id}`;
     try {
       const response = await fetch(
-        `http://localhost:5000/user/deleteFiles/${id}`,
+        `${process.env.REACT_APP_FILE_DELETE_FILE_URL}/${id}`,
         {
           method: "DELETE",
           headers: { token },

@@ -4,6 +4,12 @@ import logo from "../assets/logo.png";
 import { CircularProgress } from "@mui/material";
 interface IVerificationProps {}
 
+declare let process: {
+  env: {
+    REACT_APP_VERIFICATION_URL: string;
+  };
+};
+
 const Verification: FC<IVerificationProps> = (props) => {
   const navigate = useNavigate();
   const [verifiactionCode, setVerifiactionCode] = useState("");
@@ -19,7 +25,7 @@ const Verification: FC<IVerificationProps> = (props) => {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/cognito/verify", {
+      const response = await fetch(process.env.REACT_APP_VERIFICATION_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),

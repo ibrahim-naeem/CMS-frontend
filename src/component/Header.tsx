@@ -10,6 +10,13 @@ import HeaderImageModal from "./ProfileSubComponents/Modals/HeaderImageModal";
 import { BsClipboardPlus } from "react-icons/bs";
 
 interface IHeaderProps {}
+declare let process: {
+  env: {
+    REACT_APP_HEADER_GET_USER_URL: string;
+    REACT_APP_HEADER_GET_IMAGE_PATH_URL: string;
+    REACT_APP_HEADER_GET_S3_IMAGE_URL: string;
+  };
+};
 const Header: FC<IHeaderProps> = ({}): JSX.Element => {
   const navigate = useNavigate();
   const [imagePath, setImagePath] = useState<any>("");
@@ -21,8 +28,9 @@ const Header: FC<IHeaderProps> = ({}): JSX.Element => {
   const token: any = localStorage.getItem("Token");
 
   const getProfile = async () => {
+    // "http://localhost:5000/user/"
     try {
-      const response = await fetch("http://localhost:5000/user/", {
+      const response = await fetch(process.env.REACT_APP_HEADER_GET_USER_URL, {
         method: "GET",
         headers: { token },
       });
@@ -53,13 +61,17 @@ const Header: FC<IHeaderProps> = ({}): JSX.Element => {
     setShowImageModal(!showImageModal);
   };
   const getImagePath = async () => {
+    // "http://localhost:5000/user/getImagepath"
     try {
-      const response = await fetch(`http://localhost:5000/user/getImagepath`, {
-        method: "GET",
-        headers: {
-          token: token,
-        },
-      });
+      const response = await fetch(
+        process.env.REACT_APP_HEADER_GET_IMAGE_PATH_URL,
+        {
+          method: "GET",
+          headers: {
+            token: token,
+          },
+        }
+      );
 
       const res = await response.json();
 
@@ -70,14 +82,18 @@ const Header: FC<IHeaderProps> = ({}): JSX.Element => {
   };
 
   const getS3Image = async () => {
+    // `http://localhost:5000/user${imagePath}`
     try {
       if (imagePath) {
-        const response = await fetch(`http://localhost:5000/user${imagePath}`, {
-          method: "GET",
-          headers: {
-            token: token,
-          },
-        });
+        const response = await fetch(
+          `${process.env.REACT_APP_HEADER_GET_S3_IMAGE_URL}${imagePath}`,
+          {
+            method: "GET",
+            headers: {
+              token: token,
+            },
+          }
+        );
 
         const res = await response.blob();
 

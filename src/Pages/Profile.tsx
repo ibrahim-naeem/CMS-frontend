@@ -3,10 +3,19 @@ import Header from "../component/Header";
 import ProfileMain from "../component/ProfileMain";
 import SideBar from "../component/SideBar";
 import { isTokenPresent } from "../utils/utitlityMethods/utilityMethods";
+import { useNavigate } from "react-router-dom";
 
 interface IdashboardProps {}
 
 const dashboard: FC<IdashboardProps> = ({}) => {
+  // let navigate = useNavigate();
+  // let token = isTokenPresent("Token");
+  // console.log(token);
+  // if (!token) {
+  //   console.log(false);
+  //   navigate("/login");
+  // }
+
   return (
     <div className="flex">
       <div className="w-[18vw] ">
