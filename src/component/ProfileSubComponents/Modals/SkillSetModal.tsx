@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from "react";
+import { FC } from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { BsClipboardPlus } from "react-icons/bs";
 
@@ -7,6 +7,11 @@ interface ISkillsetModalProps {
   setShowSkillsetModal: any;
   allSkillsets: any;
 }
+declare let process: {
+  env: {
+    REACT_APP_SKILL_UPLOAD_URL: string;
+  };
+};
 
 const SkillsetModal: FC<ISkillsetModalProps> = ({
   showSkillsetModal,
@@ -26,7 +31,8 @@ const SkillsetModal: FC<ISkillsetModalProps> = ({
       let SkillsetName = selectValue || inputValue;
       console.log(SkillsetName);
       try {
-        const response = await fetch("http://localhost:5000/user/skill", {
+        // "http://localhost:5000/user/skill"
+        const response = await fetch(process.env.REACT_APP_SKILL_UPLOAD_URL, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

@@ -8,6 +8,12 @@ interface ITrainingModalProps {
   allTrainings: any;
 }
 
+declare let process: {
+  env: {
+    REACT_APP_TRAINING_UPLOAD_URL: string;
+  };
+};
+
 const TrainingModal: FC<ITrainingModalProps> = ({
   showTrainingModal,
   setShowTrainingModal,
@@ -26,14 +32,18 @@ const TrainingModal: FC<ITrainingModalProps> = ({
       let trainingName = selectValue || inputValue;
 
       try {
-        const response = await fetch("http://localhost:5000/user/trainings", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            token,
-          },
-          body: JSON.stringify({ trainingName }),
-        });
+        // "http://localhost:5000/user/trainings"
+        const response = await fetch(
+          process.env.REACT_APP_TRAINING_UPLOAD_URL,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              token,
+            },
+            body: JSON.stringify({ trainingName }),
+          }
+        );
         const res = await response.json();
         console.log("POST traingings", res);
         window.location.reload();

@@ -1,4 +1,3 @@
-import { AnySoaRecord } from "dns";
 import { FC, useState } from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { BsClipboardPlus } from "react-icons/bs";
@@ -6,10 +5,14 @@ import { BsClipboardPlus } from "react-icons/bs";
 interface IHeaderImageModalProps {
   showImageModal: any;
   setShowImageModal: any;
-
   setImage: any;
 }
 
+declare let process: {
+  env: {
+    REACT_APP_IMAGE_UPLOAD_URL: string;
+  };
+};
 const HeaderImageModal: FC<IHeaderImageModalProps> = ({
   showImageModal,
   setShowImageModal,
@@ -30,8 +33,8 @@ const HeaderImageModal: FC<IHeaderImageModalProps> = ({
     setShowImageModal(!showImageModal);
     const data = new FormData();
     data.append("file", selectedImage);
-
-    const response = await fetch("http://localhost:5000/user/uploadImage", {
+    // "http://localhost:5000/user/uploadImage"
+    const response = await fetch(process.env.REACT_APP_IMAGE_UPLOAD_URL, {
       method: "POST",
       headers: { token: token },
       body: data,

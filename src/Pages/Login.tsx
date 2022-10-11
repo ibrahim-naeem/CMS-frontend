@@ -4,6 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 
 interface ILoginProps {}
+declare let process: {
+  env: {
+    REACT_APP_LOGIN_URL: string;
+  };
+};
 
 const Login: FC<ILoginProps> = ({}) => {
   const navigate = useNavigate();
@@ -12,11 +17,12 @@ const Login: FC<ILoginProps> = ({}) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleSubmit = async (e: any) => {
+    // "http://localhost:5000/cognito/signin"
     e.preventDefault();
     try {
       setIsLoading(true);
       const body = { email, password };
-      const response = await fetch("http://localhost:5000/cognito/signin", {
+      const response = await fetch(process.env.REACT_APP_LOGIN_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),

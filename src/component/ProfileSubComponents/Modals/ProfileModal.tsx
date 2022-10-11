@@ -8,6 +8,12 @@ interface IProfileModalProps {
   details: any;
 }
 
+declare let process: {
+  env: {
+    REACT_APP_PROFILE_DATA_UPLOAD_URL: string;
+  };
+};
+
 const ProfileModal: FC<IProfileModalProps> = ({
   display,
   setDisplay,
@@ -42,8 +48,9 @@ const ProfileModal: FC<IProfileModalProps> = ({
 
     try {
       const token: any = localStorage.getItem("Token");
+      // "http://localhost:5000/user/personalDetails"
       const response = await fetch(
-        "http://localhost:5000/user/personalDetails",
+        process.env.REACT_APP_PROFILE_DATA_UPLOAD_URL,
         {
           method: "POST",
           headers: {

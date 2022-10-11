@@ -6,6 +6,11 @@ interface IFileModalProps {
   showFileModal: any;
   setShowFileModal: any;
 }
+declare let process: {
+  env: {
+    REACT_APP_FILE_UPLOAD_URL: string;
+  };
+};
 
 const FileModal: FC<IFileModalProps> = ({
   showFileModal,
@@ -25,8 +30,8 @@ const FileModal: FC<IFileModalProps> = ({
     const data = new FormData();
     console.log(data);
     data.append("file", selectedFile);
-
-    const response = await fetch("http://localhost:5000/user/uploadFile", {
+    // url => "http://localhost:5000/user/uploadFile"
+    const response = await fetch(process.env.REACT_APP_FILE_UPLOAD_URL, {
       method: "POST",
       headers: { token: token },
       body: data,

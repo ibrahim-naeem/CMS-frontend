@@ -14,6 +14,7 @@
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "axios": "^0.27.2",
+    "dotenv": "^16.0.3",
     "downloadjs": "^1.4.7",
     "js": "^0.1.0",
     "moment": "^2.29.4",
@@ -24,6 +25,7 @@
     "react-icons": "^4.4.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "serve": "^14.0.1",
     "typescript": "^4.8.2",
     "web-vitals": "^2.1.4"
   },

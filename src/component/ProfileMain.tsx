@@ -4,6 +4,12 @@ import ProfileModal from "./ProfileSubComponents/Modals/ProfileModal";
 import ProfileTabs from "./ProfileSubComponents/ProfileTabs";
 
 interface IProfileMainProps {}
+interface IHeaderProps {}
+declare let process: {
+  env: {
+    REACT_APP_PROFILEMAIN_GET_PROFILE_DATA_URL: string;
+  };
+};
 const ProfileMain: FC<IProfileMainProps> = (): JSX.Element => {
   const [display, setDisplay] = useState<boolean>(false);
   const [details, setDetails] = useState<any>({
@@ -27,7 +33,7 @@ const ProfileMain: FC<IProfileMainProps> = (): JSX.Element => {
     const token: any = localStorage.getItem("Token");
     try {
       const response = await fetch(
-        "http://localhost:5000/user/personalDetails",
+        process.env.REACT_APP_PROFILEMAIN_GET_PROFILE_DATA_URL,
         {
           method: "GET",
           headers: { token },
@@ -73,6 +79,7 @@ const ProfileMain: FC<IProfileMainProps> = (): JSX.Element => {
       console.error(error);
     }
   };
+
   useEffect(() => {
     getProfileData();
   }, []);

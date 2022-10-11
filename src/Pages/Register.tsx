@@ -4,6 +4,12 @@ import logo from "../assets/logo.png";
 import { CircularProgress } from "@mui/material";
 
 interface IRegisterProps {}
+declare let process: {
+  env: {
+    REACT_APP_REGISTER_GET_ROLES_URL: string;
+    REACT_APP_REGISTER_URL: string;
+  };
+};
 
 const Register: FC<IRegisterProps> = ({}) => {
   const navigate = useNavigate();
@@ -15,10 +21,14 @@ const Register: FC<IRegisterProps> = ({}) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const getUserRoles = async () => {
+    // "http://localhost:5000/cognito/roles"
     try {
-      const response = await fetch("http://localhost:5000/cognito/roles", {
-        method: "GET",
-      });
+      const response = await fetch(
+        process.env.REACT_APP_REGISTER_GET_ROLES_URL,
+        {
+          method: "GET",
+        }
+      );
 
       const res = await response.json();
       setUserRole(res);
@@ -28,11 +38,13 @@ const Register: FC<IRegisterProps> = ({}) => {
   };
 
   const handleSubmit = async (e: any) => {
+    // "http://localhost:5000/cognito/signup"
     e.preventDefault();
     try {
       setIsLoading(true);
       const body = { username, email, role, password };
-      const response = await fetch("http://localhost:5000/cognito/signup", {
+
+      const response = await fetch(process.env.REACT_APP_REGISTER_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),

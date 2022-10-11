@@ -8,6 +8,12 @@ interface ILeaveModalProps {
   allLeave: any;
 }
 
+declare let process: {
+  env: {
+    REACT_APP_LEAVE_UPLOAD_URL: string;
+  };
+};
+
 const LeaveModal: FC<ILeaveModalProps> = ({
   showLeaveModal,
   setShowLeaveModal,
@@ -16,14 +22,14 @@ const LeaveModal: FC<ILeaveModalProps> = ({
   let token: any = localStorage.getItem("Token");
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // let selectValue = e.target.Leaves.value;
+
     let date = e.target.LeaveDate.value;
     let leaveStatus = e.target.Status.value;
-    // if (selectValue || date) {
     if (date) {
       console.log(date, leaveStatus);
       try {
-        const response = await fetch("http://localhost:5000/user/leave", {
+        // http://localhost:5000/user/leave
+        const response = await fetch(process.env.REACT_APP_LEAVE_UPLOAD_URL, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -32,7 +38,7 @@ const LeaveModal: FC<ILeaveModalProps> = ({
           body: JSON.stringify({ date, leaveStatus }),
         });
         const res = await response.json();
-        // window.location.reload();
+        setShowLeaveModal(!showLeaveModal);
       } catch (error) {
         console.error(error);
       }
@@ -62,17 +68,6 @@ const LeaveModal: FC<ILeaveModalProps> = ({
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="flex justify-around ">
                 <div className="w-2/3">
-                  {/* <label htmlFor="cars">Choose a Leave:</label>
-                  <select name="Leaves" id="Leaves">
-                    <option value="">Leaves</option>
-                    {allLeave.map((Leave) => {
-                      return (
-                        <option key={Math.random()} value={Leave.date}>
-                          {Leave.date}
-                        </option>
-                      );
-                    })}
-                  </select> */}
                   <h1 className="my-4">Add new Leave below :</h1>
 
                   <input

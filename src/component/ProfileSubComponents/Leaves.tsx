@@ -5,6 +5,13 @@ import LeaveMapperModel from "../../models/leave-model";
 import LeaveModal from "./Modals/LeaveModal";
 
 interface ILeavesProps {}
+declare let process: {
+  env: {
+    REACT_APP_LEAVE_GET_LEAVE_URL: string;
+    REACT_APP_LEAVE_DELETE_LEAVE_URL: string;
+    REACT_APP_LEAVE_GET_ALL_LEAVES_URL: string;
+  };
+};
 
 const Leaves: FC<ILeavesProps> = (props) => {
   const [showLeaveModal, setShowLeaveModal] = useState(false);
@@ -12,19 +19,24 @@ const Leaves: FC<ILeavesProps> = (props) => {
   const [leave, setLeave] = useState<any>([
     {
       leave_id: "",
-      date: "",
-      employees_id_status: [],
+      user_id: "",
+      status: "",
+      created_at: "",
+      updated_at: "",
     },
   ]);
 
   const token: any = localStorage.getItem("Token");
   const getLeaves = async () => {
+    // "http://localhost:5000/user/leave"
     try {
-      const response = await fetch("http://localhost:5000/user/leave", {
+      const response = await fetch(process.env.REACT_APP_LEAVE_GET_LEAVE_URL, {
         method: "GET",
         headers: { token },
       });
       const res = await response.json();
+      console.log(res);
+
       let mapLeaveDataArray: Array<LeaveMapperModel> = [];
 
       res.map((leaveRow: LeaveMapperModel) => {
@@ -37,28 +49,36 @@ const Leaves: FC<ILeavesProps> = (props) => {
     }
   };
   const handleDelete = async (id) => {
+    // `http://localhost:5000/user/leave/${id}`;
     try {
-      const response = await fetch(`http://localhost:5000/user/leave/${id}`, {
-        method: "DELETE",
-        headers: { token },
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_LEAVE_DELETE_LEAVE_URL}/${id}`,
+        {
+          method: "DELETE",
+          headers: { token },
+        }
+      );
       const res = await response.json();
       console.log(res);
       alert(res.message);
-      // window.location.reload();
     } catch (error) {
       console.error(error);
     }
   };
 
   const getAllLeaves = async () => {
+    // "http://localhost:5000/user/getAllleaves"
     setShowLeaveModal(true);
-    const response = await fetch("http://localhost:5000/user/getAllleaves", {
-      method: "GET",
-      headers: { token },
-    });
+    const response = await fetch(
+      process.env.REACT_APP_LEAVE_GET_ALL_LEAVES_URL,
+      {
+        method: "GET",
+        headers: { token },
+      }
+    );
 
     const res = await response.json();
+    console.log();
 
     res.map((leave) => {
       setAllLeave((prevState) => [...prevState, leave]);

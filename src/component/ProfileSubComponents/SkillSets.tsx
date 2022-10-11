@@ -5,6 +5,13 @@ import SkillsetMapperModel from "../../models/skillset-model";
 import SkillsetModal from "./Modals/SkillSetModal";
 
 interface ISkillSetsProps {}
+declare let process: {
+  env: {
+    REACT_APP_SKILLSETS_GET_SKILL_URL: string;
+    REACT_APP_SKILLSETS_DELETE_SKILL_URL: string;
+    REACT_APP_SKILLSETS_GET_ALL_SKILLS_URL: string;
+  };
+};
 
 const SkillSets: FC<ISkillSetsProps> = (props) => {
   const [showSkillsetModal, setShowSkillsetModal] = useState(false);
@@ -19,11 +26,15 @@ const SkillSets: FC<ISkillSetsProps> = (props) => {
 
   const token: any = localStorage.getItem("Token");
   const getSkills = async () => {
+    // "http://localhost:5000/user/skills"
     try {
-      const response = await fetch("http://localhost:5000/user/skills", {
-        method: "GET",
-        headers: { token },
-      });
+      const response = await fetch(
+        process.env.REACT_APP_SKILLSETS_GET_SKILL_URL,
+        {
+          method: "GET",
+          headers: { token },
+        }
+      );
       const res = await response.json();
       let mapSkillsetData: SkillsetMapperModel = {
         skill_id: "",
@@ -43,11 +54,15 @@ const SkillSets: FC<ISkillSetsProps> = (props) => {
     }
   };
   const handleDelete = async (id) => {
+    // `http://localhost:5000/user/skills/${id}`
     try {
-      const response = await fetch(`http://localhost:5000/user/skills/${id}`, {
-        method: "DELETE",
-        headers: { token },
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_SKILLSETS_DELETE_SKILL_URL}/${id}`,
+        {
+          method: "DELETE",
+          headers: { token },
+        }
+      );
       const res = await response.json();
       console.log(res);
       alert(res.message);
@@ -58,10 +73,14 @@ const SkillSets: FC<ISkillSetsProps> = (props) => {
   };
 
   const getAllSkillsets = async () => {
+    // "http://localhost:5000/user/getAllskillsets"
     setShowSkillsetModal(true);
-    const response = await fetch("http://localhost:5000/user/getAllskillsets", {
-      headers: { token },
-    });
+    const response = await fetch(
+      process.env.REACT_APP_SKILLSETS_GET_ALL_SKILLS_URL,
+      {
+        headers: { token },
+      }
+    );
 
     const res = await response.json();
 

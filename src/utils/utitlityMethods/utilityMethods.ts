@@ -9,7 +9,6 @@ export const verifyExpiredToken = (res) => {
 
 export const isTokenPresent = (key) => {
     let token = localStorage.getItem(key)
-    console.log("istokenpresent", token);
     if (token) {
         return true
     }

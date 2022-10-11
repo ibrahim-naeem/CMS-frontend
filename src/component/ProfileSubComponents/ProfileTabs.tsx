@@ -47,7 +47,7 @@ function a11yProps(index: number) {
 
 interface IProfileTabsProps {}
 
-const ProfileTabs: FC<IProfileTabsProps> = (props) => {
+const ProfileTabs: FC<IProfileTabsProps> = ({}) => {
   const [value, setValue] = useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
